@@ -41,6 +41,11 @@
 #include "libc/sysv/consts/sa.h"
 #include "libc/x/x.h"
 #include "third_party/linenoise/linenoise.h"
+#include "third_party/lpeg/lpcode.h"
+#include "third_party/lpeg/lpcap.h"
+#include "third_party/lpeg/lpprint.h"
+#include "third_party/lpeg/lptree.h"
+#include "third_party/lpeg/lptypes.h"
 #include "third_party/lua/cosmo.h"
 #include "third_party/lua/lauxlib.h"
 #include "third_party/lua/lprefix.h"
@@ -365,6 +370,11 @@ static int pmain (lua_State *L) {
     lua_setfield(L, LUA_REGISTRYINDEX, "LUA_NOENV");
   }
   luaL_openlibs(L);  /* open standard libraries */
+  luaL_getsubtable(L, LUA_REGISTRYINDEX, "_PRELOAD");
+  int luaopen_lpeg(lua_State *L);
+  lua_pushcfunction(L, luaopen_lpeg);
+  lua_setfield(L, -2, "lpeg");
+  lua_pop(L, 1);
   luaL_requiref(L, "unix", LuaUnix, 1);
   lua_pop(L, 1);
   createargtable(L, argv, argc, script);  /* create table 'arg' */
