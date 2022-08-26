@@ -28,11 +28,11 @@ static long ParseInt(const char *s) {
 static void usage () {
   lua_writestringerror("%s: ", progname);
   lua_writestringerror(
-  "usage: %s [options] [script [args]]\n"
+  "usage: %s [options] [file]\n"
   "Available options are:\n"
-  "  -l       list types of filetypes that can be forced       "
-  "  -t       force a language's syntax for highlighting a file"
-  "  -h       Highlight a non-blank line		       "
+  "  -l       list types of filetypes that can be forced       \n"
+  "  -t       force a language's syntax for highlighting a file\n"
+  "  -h       Highlight a non-blank line		       \n"
   ,
   progname);
 }
@@ -83,20 +83,15 @@ static void GetOpts(int argc, char *argv[]) {
   }
 }
 
-/* }================================================================== */
-
 static int pmain (lua_State *L) {
   int argc = (int)lua_tointeger(L, 1);
   char **argv = (char **)lua_touserdata(L, 2);
-  
   int script;
   LuaStart(L);
   int status = 0;
   GetOpts(argc,argv);
-  
-  /* LuaSetArgv(L); */
   int i = -1;
-  printf("argc is %d\n",argc);
+  // filename omitted
   if(optind >= argc) {
           usage();
           return 1;
@@ -107,7 +102,6 @@ static int pmain (lua_State *L) {
   status = lua_pcall(L, 1, 1, 0);
   if (status != 0)
           fprintf(stderr, "%s\n", lua_tostring(L, -1));
-
   lua_getglobal(L, "main");
   lua_newtable(L);
   lua_pushliteral(L, "filename");
@@ -123,17 +117,14 @@ static int pmain (lua_State *L) {
           lua_pushstring(L, overriding_filetype);
           lua_settable(L, -3);
   }
-          
   status = lua_pcall(L, 1, 0, 0);
   if (status != 0) {
           fprintf(stderr, "%s\n", lua_tostring(L, -1));
           return 1;
   }
-
   lua_pushboolean(L, 1);  /* signal no errors */
   return 1;
 }
-
 
 int main (int argc, char **argv) {
   lua_State *L;
@@ -150,6 +141,5 @@ int main (int argc, char **argv) {
   result = lua_toboolean(L, -1);  /* get result */
   lua_report(L, status);
   lua_close(L);
-
   return (result && status == LUA_OK) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
