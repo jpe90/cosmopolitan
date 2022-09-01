@@ -13,3 +13,6 @@ __pycache__
 /tool/emacs/*.elc
 /perf.data
 /perf.data.old
+.vscode/dryrun.log
+.vscode/targets.log
+.vscode/configurationCache.log

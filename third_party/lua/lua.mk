@@ -61,7 +61,13 @@ THIRD_PARTY_LUA_A_HDRS =						\
 	third_party/lua/lvm.h						\
 	third_party/lua/lzio.h						\
 	third_party/lua/tms.h						\
-	third_party/lua/visitor.h
+	third_party/lua/visitor.h					\
+	third_party/lpeg/lpcap.h					\
+	third_party/lpeg/lpcode.h					\
+	third_party/lpeg/lpprint.h					\
+	third_party/lpeg/lptree.h					\
+	third_party/lpeg/lptypes.h					\
+	third_party/lpeg/lpvm.h						\
 
 THIRD_PARTY_LUA_A_SRCS =						\
 	third_party/lua/lapi.c						\
@@ -110,7 +116,12 @@ THIRD_PARTY_LUA_A_SRCS =						\
 	third_party/lua/lvm.c						\
 	third_party/lua/lzio.c						\
 	third_party/lua/serialize.c					\
-	third_party/lua/visitor.c
+	third_party/lua/visitor.c					\
+	third_party/lpeg/lpcap.c					\
+	third_party/lpeg/lpcode.c					\
+	third_party/lpeg/lpprint.c					\
+	third_party/lpeg/lptree.c					\
+	third_party/lpeg/lpvm.c					\
 
 THIRD_PARTY_LUA_A_OBJS =						\
 	$(THIRD_PARTY_LUA_A_SRCS:%.c=o/$(MODE)/%.o)
@@ -132,7 +143,8 @@ THIRD_PARTY_LUA_A_DIRECTDEPS =						\
 	NET_HTTP							\
 	THIRD_PARTY_LINENOISE						\
 	THIRD_PARTY_DOUBLECONVERSION					\
-	THIRD_PARTY_GDTOA
+	THIRD_PARTY_GDTOA						\
+
 
 THIRD_PARTY_LUA_A_DEPS :=						\
 	$(call uniq,$(foreach x,$(THIRD_PARTY_LUA_A_DIRECTDEPS),$($(x))))
@@ -157,6 +169,10 @@ o/$(MODE)/third_party/lua/lvm.o: private				\
 
 o/$(MODE)/third_party/lua/lauxlib.o: private				\
 		OVERRIDE_CFLAGS +=					\
+			-DSTACK_FRAME_UNLIMITED
+
+o/$(MODE)/third_party/lpeg/lpvm.o: private			\
+		OVERRIDE_CFLAGS +=				\
 			-DSTACK_FRAME_UNLIMITED
 
 $(THIRD_PARTY_LUA_A_OBJS): private					\
@@ -231,7 +247,8 @@ THIRD_PARTY_LUA_LUA_DIRECTDEPS =					\
 	THIRD_PARTY_LINENOISE						\
 	THIRD_PARTY_LUA							\
 	THIRD_PARTY_LUA_UNIX						\
-	TOOL_ARGS
+	TOOL_ARGS						\
+
 
 THIRD_PARTY_LUA_LUA_DEPS :=						\
 	$(call uniq,$(foreach x,$(THIRD_PARTY_LUA_LUA_DIRECTDEPS),$($(x))))

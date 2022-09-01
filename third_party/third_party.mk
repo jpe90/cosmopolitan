@@ -4,7 +4,6 @@
 .PHONY:	o/$(MODE)/third_party
 o/$(MODE)/third_party:				\
 	o/$(MODE)/third_party/argon2		\
-	o/$(MODE)/third_party/awk		\
 	o/$(MODE)/third_party/bzip2		\
 	o/$(MODE)/third_party/chibicc		\
 	o/$(MODE)/third_party/compiler_rt	\
@@ -25,10 +24,10 @@ o/$(MODE)/third_party:				\
 	o/$(MODE)/third_party/regex		\
 	o/$(MODE)/third_party/smallz4		\
 	o/$(MODE)/third_party/sqlite3		\
-	o/$(MODE)/third_party/sed		\
 	o/$(MODE)/third_party/stb		\
 	o/$(MODE)/third_party/tidy		\
 	o/$(MODE)/third_party/unzip		\
 	o/$(MODE)/third_party/xed		\
 	o/$(MODE)/third_party/zip		\
-	o/$(MODE)/third_party/zlib
+	o/$(MODE)/third_party/zlib	\
+	o/$(MODE)/third_party/lpeg
